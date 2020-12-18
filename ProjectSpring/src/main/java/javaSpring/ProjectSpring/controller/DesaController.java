@@ -16,51 +16,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javaSpring.ProjectSpring.dto.DesaDto;
 import javaSpring.ProjectSpring.entity.DesaEntity;
-import javaSpring.ProjectSpring.entity.KabupatenEntity;
-import javaSpring.ProjectSpring.entity.KecamatanEntity;
-import javaSpring.ProjectSpring.entity.ProvinsiEntity;
-import javaSpring.ProjectSpring.repository.DesaRepository;
-import javaSpring.ProjectSpring.repository.KabupatenRepository;
-import javaSpring.ProjectSpring.repository.KecamatanRepository;
-import javaSpring.ProjectSpring.repository.ProvinsiRepository;
+import service.DesaServiceImpl;
 
 @RestController
 @RequestMapping("/desa")
 public class DesaController {
-	@Autowired
-	private DesaRepository desaRepository;
-	@Autowired
-	private ProvinsiRepository provinsiRepository;
-	@Autowired
-	private KabupatenRepository kabupatenRepository;
-	@Autowired
-	private KecamatanRepository kecamatanRepository;
+	@Autowired 
+	private DesaServiceImpl desaService;
 	
 	//get-all
 	@GetMapping("get-all-desa")
-	public List<DesaEntity> getAllDesa(){
-		List<DesaEntity> desaEntities = desaRepository.findAll();
-		return desaEntities;
+	public ResponseEntity<?> getAllDesa(){
+		List<DesaEntity> desaEntities = desaService.getAllDesa();
+		return ResponseEntity.ok(desaEntities);
 	}
 	
 	//get-byid
 	@GetMapping("/get-desaById/{idDesa}")
 	public ResponseEntity<?> getDesaById(@PathVariable Integer idDesa){
-		DesaEntity desaEntity = desaRepository.findById(idDesa).get();
+		DesaEntity desaEntity = desaService.getDesaById(idDesa);
 		return ResponseEntity.ok(desaEntity);
 	}
 	
 	//POST
 	@PostMapping("/post-desa")
 	public ResponseEntity<?> postDesa(@RequestBody DesaDto dto){
-		ProvinsiEntity provinsiEntity = provinsiRepository.findByKodeProvinsi(dto.getKodeProvinsi());
-		KabupatenEntity kabupatenEntity = kabupatenRepository.findByKodeKabupaten(dto.getKodeKabupaten());
-		KecamatanEntity kecamatanEntity = kecamatanRepository.findByKodeKecamatan(dto.getKodeKecamatan());
-		DesaEntity desaEntity = convertToDesaEntity(dto);
-		desaEntity.setProvinsiEntity(provinsiEntity);
-		desaEntity.setKabupatenEntity(kabupatenEntity);
-		desaEntity.setKecamatanEntity(kecamatanEntity);
-		desaRepository.save(desaEntity);
+		DesaEntity desaEntity = desaService.postDesa(dto);
 		return ResponseEntity.ok(desaEntity);
 	}
 	
@@ -68,26 +49,15 @@ public class DesaController {
 	@PutMapping("/update-desa/{idDesa}")
 	public ResponseEntity<?> updateDesa(@PathVariable Integer idDesa,
 			@RequestBody DesaDto dto){
-		DesaEntity desaEntity = desaRepository.findById(idDesa).get();
-		desaEntity.setNamaDesa(dto.getNamaDesa());
-		desaEntity.setKodeDesa(dto.getKodeDesa());
-		desaRepository.save(desaEntity);
+		DesaEntity desaEntity = desaService.updateDesa(dto, idDesa);
 		return ResponseEntity.ok(desaEntity);
 	}
 	
 	//DELETE
 	@DeleteMapping("/delete-desa/{idDesa}")
 	public ResponseEntity<?> deleteDesa(@PathVariable Integer idDesa){
-		DesaEntity desaEntity = desaRepository.findById(idDesa).get();
-		desaRepository.delete(desaEntity);
+		DesaEntity desaEntity = desaService.deleteDesa(idDesa);
 		return ResponseEntity.ok(desaEntity);
 	}
 	
-	//CONVERT METHOD
-	public DesaEntity convertToDesaEntity(DesaDto dto) {
-		DesaEntity desaEntity = new DesaEntity();
-		desaEntity.setNamaDesa(dto.getNamaDesa());
-		desaEntity.setKodeDesa(dto.getKodeDesa());
-		return desaEntity;
-	}
-	}
+}
