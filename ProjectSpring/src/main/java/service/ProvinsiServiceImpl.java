@@ -3,7 +3,6 @@ package service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,32 +28,33 @@ public class ProvinsiServiceImpl implements ProvinsiService{
 	public ProvinsiEntity getProvinsiById(Integer idProvinsi) {
 		// TODO Auto-generated method stub
 		ProvinsiEntity provinsiEntity = provinsiRepository.findById(idProvinsi).get();
-		return ResponseEntity.ok(provinsiEntity);
+		return provinsiEntity;
 	}
 
 	@Override
-	public ProvinsiEntity insertProvinsi(ProvinsiDto dto, Integer idProvinsi) {
+	public ProvinsiEntity insertProvinsi(ProvinsiDto dto) {
 		// TODO Auto-generated method stub
 		ProvinsiEntity provinsiEntity = convertToProvinsiEntity(dto);
 		provinsiRepository.save(provinsiEntity);
-		return ResponseEntity.ok(provinsiEntity);
+		return provinsiEntity;
 	}
 
 	@Override
 	public ProvinsiEntity updateProvinsi(ProvinsiDto dto, Integer idProvinsi) {
 		// TODO Auto-generated method stub
+		ProvinsiEntity provinsiEntity = provinsiRepository.findById(idProvinsi).get();
 		provinsiEntity.setNamaProvinsi(dto.getNamaProvinsi());
 		provinsiEntity.setKodeProvinsi(dto.getKodeProvinsi());
 		provinsiRepository.save(provinsiEntity);
-		return ResponseEntity.ok(provinsiEntity);
+		return provinsiEntity;
 	}
 
 	@Override
-	public ProvinsiEntity deleteProvinsi(ProvinsiDto dto, Integer idProvinsi) {
+	public ProvinsiEntity deleteProvinsi(Integer idProvinsi) {
 		// TODO Auto-generated method stub
 		ProvinsiEntity provinsiEntity = provinsiRepository.findById(idProvinsi).get();
 		provinsiRepository.delete(provinsiEntity);
-		return ResponseEntity.ok(provinsiEntity);
+		return provinsiEntity;
 	}
 	
 	//CONVERT METHOD
@@ -63,5 +63,10 @@ public class ProvinsiServiceImpl implements ProvinsiService{
 		provinsiEntity.setNamaProvinsi(dto.getNamaProvinsi());
 		provinsiEntity.setKodeProvinsi(dto.getKodeProvinsi());
 		return provinsiEntity;
+
+	}
+
+
+
 
 }

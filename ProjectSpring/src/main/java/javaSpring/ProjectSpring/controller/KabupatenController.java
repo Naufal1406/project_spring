@@ -15,43 +15,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javaSpring.ProjectSpring.dto.KabupatenDto;
 import javaSpring.ProjectSpring.entity.KabupatenEntity;
-import javaSpring.ProjectSpring.entity.ProvinsiEntity;
-import javaSpring.ProjectSpring.repository.KabupatenRepository;
-import javaSpring.ProjectSpring.repository.ProvinsiRepository;
+import service.KabupatenServiceImpl;
 
 @RestController
 @RequestMapping("/kabupaten")
 public class KabupatenController {
-//	@Autowired
-//	KabupatenRepository kabupatenRepository;
-//	@Autowired
-//	ProvinsiRepository provinsiRepository;
-	
-	
-//	@GetMapping("/get-all-kabupaten")
-//	public List<KabupatenEntity> getAllKabupaten(){
-//		List<KabupatenEntity> kabupatenEntities = kabupatenRepository.findAll();
-//		return kabupatenEntities;
-//	}
-//	
+
+	@Autowired
+	KabupatenServiceImpl kabupatenService;
+
 	@GetMapping("/get-all-kabupaten")
 	public ResponseEntity<?> getAllKabupaten(){
-		List<KabupatenEntity> kabupatenEntities = kabupatenRepository.findAll();
+		List<KabupatenEntity> kabupatenEntities = kabupatenService.getAllKabupaten();
 		return ResponseEntity.ok(kabupatenEntities);
 	}
 	
 	@GetMapping("get-kabupatenById/{idKabupaten}")
 	public ResponseEntity<?> getKabupatenById(@PathVariable Integer idKabupaten){
-		KabupatenEntity kabupatenEntity = kabupatenRepository.findById(idKabupaten).get();
+		KabupatenEntity kabupatenEntity = kabupatenService.getKabupatenId(idKabupaten);
 		return ResponseEntity.ok(kabupatenEntity);
 	}
 
 	@PostMapping("/post-kabupaten")
 	public ResponseEntity<?> insertKabupaten(@RequestBody KabupatenDto dto){
-		ProvinsiEntity provinsiEntity = provinsiRepository.findByKodeProvinsi(dto.getKodeProvinsi());
-		KabupatenEntity kabupatenEntity = convertToKabupatenEntity(dto);
-		kabupatenEntity.setProvinsiEntity(provinsiEntity);
-		kabupatenRepository.save(kabupatenEntity);
+		KabupatenEntity kabupatenEntity = kabupatenService.insertKabupaten(dto);
 		return ResponseEntity.ok(kabupatenEntity);
 	}
 	
@@ -59,27 +46,16 @@ public class KabupatenController {
 	@PutMapping("/update-kabupaten/{idKabupaten}")
 	public ResponseEntity<?> updateKabupaten(@PathVariable Integer idKabupaten,
 			@RequestBody KabupatenDto dto){
-		KabupatenEntity kabupatenEntity = kabupatenRepository.findById(idKabupaten).get();
-		kabupatenEntity.setNamaKabupaten(dto.getNamaKabupaten());
-		kabupatenEntity.setKodeKabupaten(dto.getKodeKabupaten());
-		kabupatenRepository.save(kabupatenEntity);
+		KabupatenEntity kabupatenEntity = kabupatenService.updateKabupaten(dto, idKabupaten);
 		return ResponseEntity.ok(kabupatenEntity);
 	}
 	
 	//DELETE
 	@DeleteMapping("/delete-kabupaten/{idKabupaten}")
 	public ResponseEntity<?> deleteKabupaten(@PathVariable Integer idKabupaten){
-		KabupatenEntity kabupatenEntity = kabupatenRepository.findById(idKabupaten).get();
-		kabupatenRepository.delete(kabupatenEntity);
+		KabupatenEntity kabupatenEntity = kabupatenService.deleteKabupaten(idKabupaten);
 		return ResponseEntity.ok(kabupatenEntity);
 	
 	}
-	
-	//CONVERT METHOD
-//	public KabupatenEntity convertToKabupatenEntity(KabupatenDto dto){
-//		KabupatenEntity kabupatenEntity = new KabupatenEntity();
-//		kabupatenEntity.setNamaKabupaten(dto.getNamaKabupaten());
-//		kabupatenEntity.setKodeKabupaten(dto.getKodeKabupaten());
-//		return kabupatenEntity;
-//	}
+
 }

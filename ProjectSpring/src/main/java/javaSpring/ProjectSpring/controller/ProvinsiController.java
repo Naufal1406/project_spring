@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javaSpring.ProjectSpring.dto.ProvinsiDto;
 import javaSpring.ProjectSpring.entity.ProvinsiEntity;
-import javaSpring.ProjectSpring.repository.ProvinsiRepository;
+import service.ProvinsiServiceImpl;
 
 @RestController
 @RequestMapping("/provinsi")
 public class ProvinsiController  {
 	@Autowired
-	private ProvinsiRepository provinsiRepository;
-
+	private ProvinsiServiceImpl provinsiService;
+	
 	
 	@GetMapping("get-all-provinsi")
 	public List<ProvinsiEntity> getAllProvinsi(){
-		List<ProvinsiEntity> provinsiEntities = provinsiRepository.findAll();
+		List<ProvinsiEntity> provinsiEntities = provinsiService.getAllProvinsi();
 		return provinsiEntities;
 	}
 
@@ -39,15 +39,14 @@ public class ProvinsiController  {
 	
 	@GetMapping("/get-provinsiById/{idProvinsi}")
 	public ResponseEntity<?> getProvinsiById(@PathVariable Integer idProvinsi){
-		ProvinsiEntity provinsiEntity = provinsiRepository.findById(idProvinsi).get();
+		ProvinsiEntity provinsiEntity = provinsiService.getProvinsiById(idProvinsi);
 		return ResponseEntity.ok(provinsiEntity);
 		
 	}
 	
 	@PostMapping("/post-provinsi")
 	public ResponseEntity<?> insertProvinsi(@RequestBody ProvinsiDto dto){
-		ProvinsiEntity provinsiEntity = convertToProvinsiEntity(dto);
-		provinsiRepository.save(provinsiEntity);
+		ProvinsiEntity provinsiEntity = provinsiService.insertProvinsi(dto);
 		return ResponseEntity.ok(provinsiEntity);
 	}
 	
@@ -55,10 +54,7 @@ public class ProvinsiController  {
 	@PutMapping("/update-provinsi/{idProvinsi}")
 	public ResponseEntity<?> updateProvinsi(@PathVariable Integer idProvinsi,
 			@RequestBody ProvinsiDto dto){
-		ProvinsiEntity provinsiEntity = provinsiRepository.findById(idProvinsi).get();
-		provinsiEntity.setNamaProvinsi(dto.getNamaProvinsi());
-		provinsiEntity.setKodeProvinsi(dto.getKodeProvinsi());
-		provinsiRepository.save(provinsiEntity);
+		ProvinsiEntity provinsiEntity = provinsiService.updateProvinsi(dto, idProvinsi);
 		return ResponseEntity.ok(provinsiEntity);
 		
 	}
@@ -66,8 +62,7 @@ public class ProvinsiController  {
 	//DELETE
 	@DeleteMapping("/delete-provinsi/{idProvinsi}")
 	public ResponseEntity<?> deleteProvinsi(@PathVariable Integer idProvinsi){
-		ProvinsiEntity provinsiEntity = provinsiRepository.findById(idProvinsi).get();
-		provinsiRepository.delete(provinsiEntity);
+		ProvinsiEntity provinsiEntity = provinsiService.deleteProvinsi(idProvinsi);
 		return ResponseEntity.ok(provinsiEntity);
 	}
 	
