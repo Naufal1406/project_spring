@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javaSpring.ProjectSpring.dto.DesaDto;
 import javaSpring.ProjectSpring.entity.DesaEntity;
-import service.DesaServiceImpl;
+import javaSpring.ProjectSpring.service.DesaServiceImpl;
 
 @RestController
 @RequestMapping("/desa")

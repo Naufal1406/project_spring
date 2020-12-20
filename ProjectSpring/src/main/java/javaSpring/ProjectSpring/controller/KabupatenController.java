@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javaSpring.ProjectSpring.dto.KabupatenDto;
 import javaSpring.ProjectSpring.entity.KabupatenEntity;
-import service.KabupatenServiceImpl;
+import javaSpring.ProjectSpring.service.KabupatenServiceImpl;
 
 @RestController
 @RequestMapping("/kabupaten")

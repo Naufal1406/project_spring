@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javaSpring.ProjectSpring.dto.KecamatanDto;
 import javaSpring.ProjectSpring.entity.KecamatanEntity;
-import service.KecamatanServiceImpl;
+import javaSpring.ProjectSpring.service.KecamatanServiceImpl;
 
 @RestController
 @RequestMapping("/kecamatan")

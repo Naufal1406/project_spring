@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javaSpring.ProjectSpring.dto.ProvinsiDto;
 import javaSpring.ProjectSpring.entity.ProvinsiEntity;
-import service.ProvinsiServiceImpl;
+import javaSpring.ProjectSpring.service.ProvinsiServiceImpl;
 
 @RestController
 @RequestMapping("/provinsi")
