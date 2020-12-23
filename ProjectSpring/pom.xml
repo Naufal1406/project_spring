@@ -44,12 +44,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<!--  
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>8.0.22</version>
-		</dependency>
+		</dependency>-->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -72,6 +75,15 @@
 		    <groupId>org.webjars</groupId>
 		    <artifactId>font-awesome</artifactId>
 		    <version>5.15.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
