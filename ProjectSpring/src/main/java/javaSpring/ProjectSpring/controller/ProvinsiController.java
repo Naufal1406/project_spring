@@ -68,6 +68,12 @@ public class ProvinsiController  {
 		return ResponseEntity.ok(provinsiEntity);
 	}
 	
+	//SOFTDELETE
+	@PutMapping("/softDelete-provinsi/{idProvinsi}")
+	public ResponseEntity<?> softDeleteProvinsi(@PathVariable Integer idProvinsi){
+		ProvinsiEntity provinsiEntity = provinsiService.softDeleteProvinsi(idProvinsi);
+		return ResponseEntity.ok(provinsiEntity);
+	}
 	
 	
 	///CONVERT METHOD

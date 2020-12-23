@@ -29,4 +29,7 @@ public class ProvinsiEntity implements Serializable {
 	
 	@Column (name = "kode_provinsi", unique = true, length = 100)
 	private String kodeProvinsi;
+	
+	@Column (name = "status")
+	private Integer status = 1;
 }

@@ -66,6 +66,15 @@ public class ProvinsiServiceImpl implements ProvinsiService{
 
 	}
 
+	@Override
+	public ProvinsiEntity softDeleteProvinsi(Integer idProvinsi) {
+		// TODO Auto-generated method stub
+		ProvinsiEntity provinsiEntity = provinsiRepository.findById(idProvinsi).get();
+		provinsiEntity.setStatus(0);
+		provinsiRepository.save(provinsiEntity);
+		return provinsiEntity;
+	}
+
 
 
 

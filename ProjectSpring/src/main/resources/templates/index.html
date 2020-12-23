@@ -2,22 +2,66 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Tutorial Spring MVC - Thymeleaf</title>
 <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.15.1/css/all.min.css">
-<link rel="stylesheet" th:src="@{/css/style.css}">
+<link rel="stylesheet" 
+	href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 </head>
+<link rel="stylesheet" th:src="@{/css/style.css}">
+
 <body>
+
+<div th:replace="/fragments/header::header"></div>
+	<div class="container">
+		<form id="form-submit">
+			<div>
+				<label class="col-sm-2">Nama Provinsi</label>
+				<input class="col-sm-10" type="text" name="namaProvinsi" id="namaProvinsi">	
+			</div>
+			<br>
+			<div>
+				<label class="col-sm-2">Kode Provinsi</label>
+				<input class="col-sm-10" type="text" name="kodeProvinsi" id="kodeProvinsi">	
+			</div>
+			<br>
+			<button type="submit" id="btn-save" class="btn btn-primary">Save</button>
+		</form>
+	</div>
 	
-	<div th:replace="fragments/header::header"></div>
-	<div class="container" th:fragment="content-body"></div>
-	<div class="footer" th:replace="fragments/footer::footer"></div>
+	<br>
+
+	<div class="container">
+		<table class="table" id="table-provinsi">
+		<thead>
+			<tr>
+				<th scope="col">id</th>
+				<th scope="col">Nama Provinsi</th>
+				<th scope="col">Kode Provinsi</th>
+				<th scope="col">Action</th>	
+			</tr>
+		</thead>
+		 <tbody id="body-provinsi">
+		</tbody>			
+		</table>
+	</div>
+	
 	
 	<script type="text/javascript"
 		src="/webjars/jquery/3.5.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="/webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 	<script type="text/javascript" th:src="@{/js/myscript.js}"></script>
-	
+	<script type="text/javascript" 
+		src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js">
+	</script>
+	<script>	
+		tableProvinsi.getProvinsi();
+		
+		$('#btn-save').click(function () {
+			formProvinsi.save();
+			tableProvinsi.create();
+		})
+	</script>
 </body>
 </html>
